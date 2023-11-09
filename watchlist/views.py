@@ -2,7 +2,8 @@ from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_user, login_required, logout_user, current_user
 
 from watchlist import app, db
-from watchlist.models import User, Movie
+from watchlist.models import User, Movie, Message
+from watchlist.forms import MessageForm
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -58,6 +59,37 @@ def delete(movie_id):
     db.session.commit()
     flash('Item deleted.')
     return redirect(url_for('index'))
+
+
+@app.route('/message', methods=['GET', 'POST'])
+def message():
+    form = MessageForm()
+    # messages = Message.query.all()
+    # print('messages', messages)
+    messages = Message.query.order_by(Message.timestamp.desc()).all()
+    return render_template('message.html', form=form, messages=messages)
+
+
+@app.route('/message/create', methods=['POST'])
+@login_required
+def message_create():
+    form = MessageForm()
+    if form.validate_on_submit():
+        message = Message(name=form.name.data, text=form.text.data)
+        db.session.add(message)
+        db.session.commit()
+        flash('Leave message successfully.')
+    return redirect(url_for('message'))
+
+
+@app.route('/message/delete/<int:msg_id>', methods=['POST'])
+@login_required
+def message_delete(msg_id):
+    message = Message.query.get_or_404(msg_id)
+    db.session.delete(message)
+    db.session.commit()
+    flash('Delete message successfully.')
+    return redirect(url_for('message'))
 
 
 @app.route('/settings', methods=['GET', 'POST'])
