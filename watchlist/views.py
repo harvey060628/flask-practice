@@ -65,7 +65,8 @@ def delete(movie_id):
 def message():
     form = MessageForm()
     isAdmin = False
-    if current_user.username in ["harvey", "joy"]:
+    print(current_user.is_authenticated)
+    if current_user.is_authenticated and current_user.username in ["harvey", "joy"]:
         isAdmin = True
     messages = Message.query.order_by(Message.timestamp.desc()).all()
     return render_template('message.html', form=form, messages=messages, isAdmin=isAdmin)
