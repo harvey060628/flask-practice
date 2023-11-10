@@ -36,3 +36,5 @@ werkzeug~=2.0.3
 zipp==3.8.1
     # via importlib-metadata
 wtforms~=3.1.1
+flask_bootstrap
+flask_moment
