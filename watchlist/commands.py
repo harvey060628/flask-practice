@@ -1,7 +1,7 @@
 import click
 
 from watchlist import app, db
-from watchlist.models import User, Movie, Message
+from watchlist.models import User, Movie
 
 
 @app.cli.command()
@@ -39,6 +39,12 @@ def forge():
         movie = Movie(title=m['title'], year=m['year'])
         db.session.add(movie)
 
+    adminDict = {'harvey': "1028",
+                 'joy': "0430"}
+
+    for username, password in adminDict.items():
+        user = User(username=username, name='Admin')
+        user.set_password(password)
 
     db.session.commit()
     click.echo('Done.')

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 
 class MessageForm(FlaskForm):
@@ -8,8 +8,3 @@ class MessageForm(FlaskForm):
     text = StringField('Leave some message ~')
     submit = SubmitField('Submit')
 
-# class LoginForm(FlaskForm):
-#     username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
-#     password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
-#     remember = BooleanField('Remember me')
-#     submit = SubmitField()

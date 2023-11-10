@@ -64,10 +64,11 @@ def delete(movie_id):
 @app.route('/message', methods=['GET', 'POST'])
 def message():
     form = MessageForm()
-    # messages = Message.query.all()
-    # print('messages', messages)
+    isAdmin = False
+    if current_user.username in ["harvey", "joy"]:
+        isAdmin = True
     messages = Message.query.order_by(Message.timestamp.desc()).all()
-    return render_template('message.html', form=form, messages=messages)
+    return render_template('message.html', form=form, messages=messages, isAdmin=isAdmin)
 
 
 @app.route('/message/create', methods=['POST'])

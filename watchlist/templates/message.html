@@ -26,6 +26,11 @@
             </small>
         </div>
         <p class="mb-1">{{ message.text }}</p>
+        {% if isAdmin %}
+        <form method="post" action="{{ url_for('message_delete', msg_id=message.id) }}">
+            <button class="btn btn-danger position-absolute bottom-0 end-0"><i class="fa fa-close"></i></button>
+        </form>
+        {% endif %}
     </a>
     {% endfor %}
 </div>
