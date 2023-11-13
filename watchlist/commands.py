@@ -33,8 +33,6 @@ def forge():
         {'title': 'The Pork of Music', 'year': '2012'},
     ]
 
-    user = User(name=name)
-    db.session.add(user)
     for m in movies:
         movie = Movie(title=m['title'], year=m['year'])
         db.session.add(movie)
@@ -45,6 +43,7 @@ def forge():
     for username, password in adminDict.items():
         user = User(username=username, name='Admin')
         user.set_password(password)
+        db.session.add(user)
 
     db.session.commit()
     click.echo('Done.')
